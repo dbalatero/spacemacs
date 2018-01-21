@@ -81,10 +81,13 @@
   (spacemacs/add-flycheck-hook 'enh-ruby-mode))
 
 (defun ruby/post-init-ggtags ()
-  (add-hook 'ruby-mode-local-vars-hook #'spacemacs/ggtags-mode-enable))
+  (spacemacs/add-to-hooks 'spacemacs/ggtags-mode-enable
+                          '(ruby-mode-local-vars-hook
+                            enh-ruby-mode-local-vars-hook)))
 
 (defun ruby/post-init-helm-gtags ()
-  (spacemacs/helm-gtags-define-keys-for-mode 'ruby-mode))
+  (dolist (mode '(ruby-mode enh-ruby-mode))
+    (spacemacs/helm-gtags-define-keys-for-mode mode)))
 
 (defun ruby/init-minitest ()
   (use-package minitest
